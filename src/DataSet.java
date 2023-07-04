@@ -3,7 +3,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DataSet {
-    private HashMap<City, Boolean> citiesUsed = new HashMap();
+    private final HashMap<City, Boolean> citiesUsed = new HashMap<>();
 
     public void add(City city) {
         citiesUsed.put(city, false);

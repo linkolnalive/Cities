@@ -2,11 +2,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
-    private DataSet dataSet = new DataSet();
+    private final DataSet dataSet = new DataSet();
     private int score = 0;
     private City currentCity = null;
 
-    public Game () {
+    public Game() {
         dataSet.add(new City("Kyiv"));
         dataSet.add(new City("Dnipro"));
         dataSet.add(new City("Lviv"));
@@ -17,13 +17,13 @@ public class Game {
 
     public boolean turn(String value) throws IOException {
         if (dataSet.contains(value)) {
-            if(!dataSet.isUsed(value)) {
-                if(currentCity == null) {
+            if (!dataSet.isUsed(value)) {
+                if (currentCity == null) {
                     dataSet.use(value);
                     currentCity = new City(value);
                     return true;
                 } else {
-                    if(currentCity.lastChar() == value.toLowerCase().charAt(0)) {
+                    if (currentCity.lastChar() == value.toLowerCase().charAt(0)) {
                         dataSet.use(value);
                         currentCity = new City(value);
                         return true;
@@ -34,7 +34,7 @@ public class Game {
             } else {
                 throw new IOException("This city has been already used");
             }
-        } else if (value.equals("Здаюсь")){
+        } else if (value.equals("Здаюсь")) {
             return false;
         } else {
             throw new IOException("This city is not known");
@@ -53,22 +53,27 @@ public class Game {
     }
 
     public int play() {
-        try {
+        while (true) {
+            boolean turnResult;
             while (true) {
-                if (turn(getValue())) {
-                    this.score++;
-                    if(turnAI()) {
-                        System.out.println(currentCity);
-                    } else {
-                        return score;
-                    }
-                } else {
-                    return -1;
+                try {
+                    turnResult = turn(getValue());
+                    break;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            if (turnResult) {
+                this.score++;
+                if (turnAI()) {
+                    System.out.println(currentCity);
+                } else {
+                    return score;
+                }
+            } else {
+                return -1;
+            }
         }
-        throw new RuntimeException("Невідома помилка");
     }
 }
+
