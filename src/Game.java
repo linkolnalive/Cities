@@ -69,6 +69,6 @@ public class Game {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        throw new RuntimeException();
+        throw new RuntimeException("Невідома помилка");;
     }
 }

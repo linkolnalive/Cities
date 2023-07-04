@@ -25,7 +25,7 @@ public class DataSet {
         AtomicBoolean found = new AtomicBoolean(false);
         AtomicReference<City> city = new AtomicReference<>();
         citiesUsed.forEach((key, used) -> {
-            if (!found.get() && key.firstChar() == c) {
+            if (!found.get() && !used && key.firstChar() == c) {
                 city.set(key);
                 found.set(true);
             }
